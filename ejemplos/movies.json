@@ -1,0 +1,32 @@
+{
+  "title": "wakanda",
+  "elenco": 
+    [
+      {
+        "nombre": "Tom Hanks",
+        "edad": "50",
+        "oscar": "bool", // dato booleano que indica si gano un oscar en su carrera
+        "nationality": "USA"
+      }
+    ],
+  "director": "Spielberg",
+  "genres": [
+    "accion",
+    "aventura",
+    "etc..."
+  ],
+  "sinopsis": "loremimpsun",
+  "duracion": "int", // en minutos
+  "ratings": [
+    "1",
+    "2",
+    "etcc"
+  ],
+  "avg_rating": "1.5",
+  "comments": [
+    {
+      "user_id": "1", // data referenciada de tabla users
+      "text": "loremimpsun"
+    }
+  ]
+}

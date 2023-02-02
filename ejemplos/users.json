@@ -1,0 +1,7 @@
+{
+  "_id": "numero",
+  "nombre": "Diego",
+  "apellido": "cordova",
+  "username": "nes",
+  "password": "mongoDB"
+}
