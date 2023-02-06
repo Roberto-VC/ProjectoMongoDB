@@ -15,6 +15,7 @@
     "aventura",
     "etc..."
   ],
+  "year": "2006", // 
   "sinopsis": "loremimpsun",
   "duracion": "int", // en minutos
   "ratings": [
