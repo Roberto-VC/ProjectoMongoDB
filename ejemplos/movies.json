@@ -3,13 +3,19 @@
   "elenco": 
     [
       {
-        "nombre": "Tom Hanks",
+        "fullname": {
+          "nombre": "Tom",
+          "apellido": "Hanks"
+        },
         "edad": "50",
         "oscar": "bool", // dato booleano que indica si gano un oscar en su carrera
         "nationality": "USA"
       }
     ],
-  "director": "Spielberg",
+  "director": {
+    "nombre": "Steven",
+    "apellido": "Spielberg"
+  },
   "genres": [
     "accion",
     "aventura",
