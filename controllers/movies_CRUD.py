@@ -168,3 +168,56 @@ def deleteMovie(db):
             "succes": False,
             'error': str(e)
         }
+
+def createUser(db):
+    
+    id = db.users.insert_one({
+        "_id": request.json["username"],
+        "Nombre Completo": {"nombre": request.json["nombre"], "apellido": request.json["apellido"]},
+        "password": request.json["password"]
+    })
+    
+    return {"msg": "Recived"}
+
+def getUser(db):
+    users = []
+    for user in db.users.find({'_id': request.json["username"]}):
+        users.append({
+            'username': user['_id'],
+            'nombre': user['nombre'],
+            'apellido': user['apellido'],
+            'password': user['password']
+        })
+    if len(users) == 1:
+        temp = users[0]
+        if request.json["password"] == temp['password']:
+            return {"msg": ":)"}
+        else:
+            return {"msg": ":|"}
+    else:
+        return {"msg": ":("}
+
+def deleteUser(db, id):
+    db.users.delete_one({'_id': id})
+    return jsonify({"msg": 'User deleted'})
+
+def updateUser(db, id):
+    db.users.update_one(
+        {'_id': ObjectId(id)}, 
+        {'$set': {        
+        "nombre": request.json["nombre"],
+        "apellido": request.json["apellido"],
+        "username": request.json["username"],
+        "password": request.json["password"]}}
+    )
+    return jsonify({"msg": 'User Updated'})
+
+def addReview(db, id):
+    mongo.db.movies.update_one(
+        {'_id': ObjectId(id)},
+        {'$push': {
+            'ratings': request.json["rating"],
+            "comments": {"user_id": request.json["username"], "text": request.json["text"]}
+        }}
+    )
+    return jsonify({"msg": "Review Added"})
