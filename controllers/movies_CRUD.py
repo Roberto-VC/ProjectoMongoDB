@@ -52,6 +52,7 @@ def _process_director(director:str) -> list[str]:
     director = director.replace(' ', '')
     director = director.replace('\n', '')
     director = director.replace('"', '')
+    director = director.replace("'", '')
     director = director.split(',')
 
     new_director = {}
