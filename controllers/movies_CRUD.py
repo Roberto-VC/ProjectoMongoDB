@@ -170,10 +170,11 @@ def deleteMovie(db):
         }
 
 def createUser(db):
-    
+    username = request.json["username"]
     id = db.users.insert_one({
-        "_id": request.json["username"],
-        "Nombre Completo": {"nombre": request.json["nombre"], "apellido": request.json["apellido"]},
+        "_id": username,
+        "nombre": request.json["nombre"],
+        "apellido": request.json["apellido"],
         "password": request.json["password"]
     })
     
@@ -213,7 +214,7 @@ def updateUser(db, id):
     return jsonify({"msg": 'User Updated'})
 
 def addReview(db, id):
-    mongo.db.movies.update_one(
+    db.movies.update_one(
         {'_id': ObjectId(id)},
         {'$push': {
             'ratings': request.json["rating"],

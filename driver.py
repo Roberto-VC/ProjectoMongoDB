@@ -8,6 +8,7 @@ import controllers.movies_CRUD as mcrud
 
 # App Config
 app = Flask(__name__)
+CORS(app)
 app.config['UPLOAD_FOLDER'] = './controllers/temp'
 app.config['MONGO_URI']="mongodb+srv://peliculas:Mongo123@cluster0.dtfcscy.mongodb.net/Proyecto1?retryWrites=true&w=majority"
 mongo = PyMongo(app)
