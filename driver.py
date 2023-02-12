@@ -44,6 +44,27 @@ def addCover():
 def deleteMovie():
     return mcrud.deleteMovie(db)
 
+@app.route("/signup", methods=["POST"])
+def createUser():
+    return mcrud.createUser(db)
+
+@app.route("/login", methods=["POST"])
+def getUser():
+    return mcrud.getUser(db)
+
+@app.route("/signup/<id>", methods=["DELETE"])
+def deleteUser(id):
+    return mcrud.deleteUser(db,id)
+
+
+@app.route("/signup/<id>", methods=["PUT"])
+def updateUser(id):
+    return mcrud.updateUser(db,id)
+
+@app.route("/review/<id>", methods=["PUT"])
+def addReview(id):
+    return mcrud.addReview(db,id)
+
 # -------------- Run API --------------
 if __name__ == "__main__":
     app.run(debug = True)
