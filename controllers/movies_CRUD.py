@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, send_file
 import pymongo
 from bson.objectid import ObjectId
 
@@ -45,6 +45,20 @@ def _process_genres(genres:str) -> list[str]:
     genres = genres.split(',')
     return genres
 
+def _process_director(director:str) -> list[str]:
+    director = director[1:-1]
+    director = director.replace(' ', '')
+    director = director.replace('\n', '')
+    director = director.replace('"', '')
+    director = director.split(',')
+
+    new_director = {}
+    for field in director:
+        key, value = field.split(':')
+        new_director[key] = value
+
+    return new_director
+
 def createPeli(db, app):
     # ----- Upload de imagen con GridFS
     # revisar que la imagen de portada se envio correctamente
@@ -80,12 +94,16 @@ def createPeli(db, app):
     
     # transformaciones a genres
     genres = _process_genres(request.form["genres"])
+    
+    # transformaciones a director
+    director = _process_director(request.form["director"])
+
 
     # Creacion de pelicula
     db.movies.insert_one({
         "title": request.form['title'],
         "elenco": elencos,
-        "director": request.form['director'],
+        "director": director,
         "genres": genres,
         "year": int(request.form["year"]),
         "sinopsis": request.form["sinopsis"],
@@ -222,3 +240,8 @@ def addReview(db, id):
         }}
     )
     return jsonify({"msg": "Review Added"})
+
+def getCover(db):
+    fs = GridFS(db)
+    data = fs.get(ObjectId(request.json["id"])).read()
+    send_file(data, download_name='cover.png')
