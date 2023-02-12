@@ -1,5 +1,6 @@
 from flask import request, jsonify, send_file
 import pymongo
+from bson import json_util
 from bson.objectid import ObjectId
 
 # -------- Implementacion de GridFS --------
@@ -240,6 +241,18 @@ def addReview(db, id):
         }}
     )
     return jsonify({"msg": "Review Added"})
+
+def findmovie(db, id):
+    users = []
+    for user in db.movies.find({'title': {'$regex': id}}):
+        users.append({"cover": user["cover"]})
+    return json.loads(json_util.dumps(users))
+
+def findgenre(db, id):
+    users = []
+    for user in db.movies.find({'genres': {'$regex': id}}):
+        users.append({"cover": user["cover"]})
+    return json.loads(json_util.dumps(users))
 
 def getCover(db):
     fs = GridFS(db)
