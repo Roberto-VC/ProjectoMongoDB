@@ -2,6 +2,7 @@ from flask import request, jsonify, send_file
 import pymongo
 from bson import json_util
 from bson.objectid import ObjectId
+import json
 
 # -------- Implementacion de GridFS --------
 # Referencias: 
@@ -254,7 +255,10 @@ def findgenre(db, id):
         users.append({"cover": user["cover"]})
     return json.loads(json_util.dumps(users))
 
-def getCover(db):
+def getCover(db, id):
+    id = ObjectId(id)
     fs = GridFS(db)
-    data = fs.get(ObjectId(request.json["id"])).read()
-    send_file(data, download_name='cover.png')
+    data = fs.get(id)
+    print('llego')
+    filename = db.fs.files.find_one({'_id': id})['filename']
+    return send_file(data, download_name=filename)

@@ -45,9 +45,9 @@ def addCover():
 def deleteMovie():
     return mcrud.deleteMovie(db)
 
-@app.route("/getCover", methods=["POST"])
-def getCover():
-    return mcrud.getCover(db)
+@app.route("/getCover/<id>", methods=["GET"])
+def getCover(id):
+    return mcrud.getCover(db, id)
 
 # users CRUD
 @app.route("/signup", methods=["POST"])
