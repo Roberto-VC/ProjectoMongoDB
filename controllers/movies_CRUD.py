@@ -245,17 +245,20 @@ def addReview(db, id):
     return jsonify({"msg": "Review Added"})
 
 def findmovie(db, id):
-    users = []
-    for user in db.movies.find({'title': {'$regex': id}}):
-        users.append({"cover": user["cover"]})
-    return json.loads(json_util.dumps(users))
+    tuples = []
+    for tuple in db.movies.find({'title': {'$regex': id}}):
+        tuple['_id'] = str(tuple['_id'])
+        tuple['cover'] = str(tuple['cover'])
+        tuples.append(tuple)
+    return jsonify(tuples)
 
 def findgenre(db, id):
-    users = []
-    for user in db.movies.find({'genres': {'$regex': id}}):
-        users.append({"cover": user["cover"]})
-    return json.loads(json_util.dumps(users))
-
+    tuples = []
+    for tuple in db.movies.find({'genres': {'$regex': id}}):
+        tuple['_id'] = str(tuple['_id'])
+        tuple['cover'] = str(tuple['cover'])
+        tuples.append(tuple)
+    return jsonify(tuples)
 def getCover(db, id):
     id = ObjectId(id)
     fs = GridFS(db)
