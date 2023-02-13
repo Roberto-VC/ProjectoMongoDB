@@ -12,7 +12,6 @@ from gridfs import GridFS
 import os
 
 def _process_elenco(elencos:str) -> list[dict]:
-    elencos = elencos.replace(' ', '')
     elencos = elencos.replace('\n', '')
     elencos = elencos.replace('"', '')
     elencos = elencos[1:-1]
@@ -31,7 +30,7 @@ def _process_elenco(elencos:str) -> list[dict]:
 
     for n in new_elenco:
         n['edad'] = int(n['edad'])
-        n['oscar'] = True if n['oscar'] else False
+        n['oscar'] = True if n['oscar'] == 'true' else False
 
     return new_elenco
 
@@ -95,7 +94,6 @@ def createPeli(db, app):
     
     # transformaciones a director
     director = _process_director(request.form["director"])
-
 
     # Creacion de pelicula
     db.movies.insert_one({

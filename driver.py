@@ -3,9 +3,11 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from flask_cors import CORS
+from bson.son import SON
 
 # Controllers
 import controllers.movies_CRUD as mcrud
+import controllers.kpis as kpis
 
 # App Config
 app = Flask(__name__)
@@ -76,9 +78,25 @@ def addReview(id):
 def findgenre(id):
     return mcrud.findgenre(db,id)
 
+@app.route("/findmovie/<title>", methods=["GET"])
+def findmovie(title):
+    return mcrud.findmovie(db, title)
+
 @app.route("/getReview/<id>", methods=["GET"])
 def getReview(id):
     return db.movies.find_one({'_id': ObjectId(id)})['comments']
+
+@app.route("/topActor/<genre>", methods=["GET"])
+def topActor(genre):
+    return kpis.topActor(db, genre)
+
+@app.route("/topDirector/<genre>", methods=["GET"])
+def topDirector(genre):
+    return kpis.topDirector(db, genre)
+
+@app.route("/topMovies/", methods=["GET"])
+def topMovies():
+    return kpis.topMovies(db)
 
 # -------------- Run API --------------
 if __name__ == "__main__":
