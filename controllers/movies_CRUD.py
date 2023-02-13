@@ -16,10 +16,7 @@ def _process_elenco(elencos:str) -> list[dict]:
     elencos = elencos.replace('\n', '')
     elencos = elencos.replace('"', '')
     elencos = elencos[1:-1]
-    elencos = elencos.split('}')
-    elencos = elencos[0:-1]
-    elencos[0] = elencos[0][1:]
-    elencos[1] = elencos[1][2:]
+    elencos = elencos.split('},{')
 
     new_elenco = []
     for actor in elencos:
@@ -31,7 +28,6 @@ def _process_elenco(elencos:str) -> list[dict]:
             temp_elenco[key] = value
 
         new_elenco.append(temp_elenco)
-
 
     for n in new_elenco:
         n['edad'] = int(n['edad'])
@@ -74,7 +70,6 @@ def createPeli(db, app):
     
     if file.filename.split('.')[1] not in ['png', 'jpeg', 'jpg']:
         return jsonify({'error': 'File not allowed'}), 400
-
     # guardar archivo temporalmente
     temp_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename) 
     file.save(temp_path)
