@@ -79,6 +79,15 @@ def findmovie(id):
 def findgenre(id):
     return mcrud.findgenre(db,id)
 
+@app.route("/findmovie/<id>", methods=["GET"])
+def findmovie(id):
+    return mcrud.findmovie(db,id)
+
+@app.route("/findgenre/<id>", methods=["GET"])
+def findgenre(id):
+    return mcrud.findgenre(db,id)
+
+
 # -------------- Run API --------------
 if __name__ == "__main__":
     app.run(debug = True)
