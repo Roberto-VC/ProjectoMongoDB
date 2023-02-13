@@ -259,6 +259,7 @@ def findgenre(db, id):
         tuple['cover'] = str(tuple['cover'])
         tuples.append(tuple)
     return jsonify(tuples)
+    
 def getCover(db, id):
     id = ObjectId(id)
     fs = GridFS(db)

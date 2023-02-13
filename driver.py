@@ -1,6 +1,7 @@
 # Flask Imports
 from flask import Flask
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 from flask_cors import CORS
 
 # Controllers
@@ -71,22 +72,13 @@ def updateUser(id):
 def addReview(id):
     return mcrud.addReview(db,id)
 
-@app.route("/findmovie/<id>", methods=["GET"])
-def findmovie(id):
-    return mcrud.findmovie(db,id)
-
 @app.route("/findgenre/<id>", methods=["GET"])
 def findgenre(id):
     return mcrud.findgenre(db,id)
 
-@app.route("/findmovie/<id>", methods=["GET"])
-def findmovie(id):
-    return mcrud.findmovie(db,id)
-
-@app.route("/findgenre/<id>", methods=["GET"])
-def findgenre(id):
-    return mcrud.findgenre(db,id)
-
+@app.route("/getReview/<id>", methods=["GET"])
+def getReview(id):
+    return db.movies.find_one({'_id': ObjectId(id)})['comments']
 
 # -------------- Run API --------------
 if __name__ == "__main__":
